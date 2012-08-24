@@ -11,9 +11,10 @@ class Video():
         self.categories = []
         self.length = "-"
         self.date = "-"
+		self.views = ""
     
     def __repr__(self):
-        return "%s, Tags: %s, Categories: %s, %s, %s" % (self.url,str(self.tags),str(self.categories),self.length,self.date)
+        return "%s, Tags: %s, Categories: %s, %s, %s, %s" % (self.url,str(self.tags),str(self.categories),self.length,self.date,self.views)
 
 def GetVideoTags(videourl):
     video = Video() # initialize new video
@@ -30,6 +31,8 @@ def GetVideoTags(videourl):
                 video.length = element.getText()[element.getText().find("Duration:")+10:]
             elif element.getText().find("Date:") != -1:
                 video.date = element.getText()[element.getText().find("Date:")+6:]
+			elif element.getText().find("Views:") != -1:
+				video.views = element.getText()[element.getText().find("Views:"):]
         tag_elements = soup.findAll("ul",{"class":"listCat"})
         for tag_element in tag_elements:
             if str(tag_element.b.text) == "Categories:":
